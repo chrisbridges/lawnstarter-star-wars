@@ -8,3 +8,9 @@ with a React frontend and a stats endpoint recomputed every 5 minutes.
 ```bash
 docker build -t swstarter .
 docker run -p 3000:3000 swstarter
+
+## Out of scope:
+- Mobile stying
+- Test coverage
+- Database persistence
+
