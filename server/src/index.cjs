@@ -1,3 +1,4 @@
+// server/index.cjs
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -85,15 +86,26 @@ app.get('/api/stats', (req, res) => {
   res.json(getStats());
 });
 
-const publicPath = path.join(__dirname, 'public');
+// --- Static frontend (React build) ---
+// By default the server does not serve the frontend build. If you want
+// the server container to also serve the static client, set
+// `SERVE_FRONTEND=true` in the environment. When enabled, the server
+// will serve files from ../client/build.
+if (process.env.SERVE_FRONTEND === 'true') {
+  const buildPath = path.join(__dirname, '..', 'client', 'build');
+  app.use(express.static(buildPath));
 
-app.use(express.static(publicPath));
+  app.get('*', (req, res) => {
+    // Avoid trying to send index.html for unknown API routes
+    if (req.path && req.path.startsWith('/api')) {
+      return res.status(404).json({ error: 'API route not found' });
+    }
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
-});
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
 
-// ─── Start server ───
+// --- Start server ---
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
