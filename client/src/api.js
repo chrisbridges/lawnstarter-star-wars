@@ -1,5 +1,3 @@
-// client/src/api.js
-
 const API_BASE = '/api';
 
 async function handle(res) {

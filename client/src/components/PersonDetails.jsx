@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function PersonDetails({ data, onBack }) {
     return (
         <section className="card detail-card">

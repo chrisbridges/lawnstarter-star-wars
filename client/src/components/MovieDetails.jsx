@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function MovieDetails({ data, onBack, onOpenPerson }) {
     return (
         <section className="card detail-card">
@@ -22,7 +20,6 @@ export default function MovieDetails({ data, onBack, onOpenPerson }) {
                     <ul className="link-list">
                         {data.characters.map((c) => (
                             <li key={c.id}>
-                                {/* You can decide whether to make these clickable */}
                                 <button
                                     type="button"
                                     className="link-button"

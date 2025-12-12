@@ -1,16 +1,15 @@
-// client/src/App.jsx
 import React, { useState } from 'react';
 import { search, fetchPerson, fetchFilm } from './api';
-import './styles.css'; // keep your existing styles or adapt classes below
+import './styles.css';
 
 function App() {
-    const [mode, setMode] = useState('people'); // 'people' | 'films'
+    const [mode, setMode] = useState('people');
     const [query, setQuery] = useState('');
     const [isSearching, setIsSearching] = useState(false);
-    const [results, setResults] = useState([]); // list view
+    const [results, setResults] = useState([]);
     const [error, setError] = useState(null);
 
-    const [view, setView] = useState('search'); // 'search' | 'personDetails' | 'filmDetails'
+    const [view, setView] = useState('search');
     const [person, setPerson] = useState(null);
     const [film, setFilm] = useState(null);
 
@@ -70,7 +69,6 @@ function App() {
 
     function backToSearch() {
         setView('search');
-        // keep results + query, just like the mocks
     }
 
     return (
@@ -80,7 +78,6 @@ function App() {
             </header>
 
             <main className="app-main">
-                {/* Left: search form */}
                 <section className="search-panel">
                     <form onSubmit={onSubmit}>
                         <p className="search-label">What are you searching for?</p>
@@ -128,7 +125,6 @@ function App() {
                     </form>
                 </section>
 
-                {/* Right: results or details */}
                 <section className="results-panel">
                     <h2 className="results-title">Results</h2>
 
