@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { recomputeStats } from "./statsService.js";
+import { recomputeStats } from "./statsService.cjs";
 
 const events = new EventEmitter();
 const queue = []; // simple FIFO queue of job names
@@ -41,3 +41,5 @@ export function startStatsScheduler() {
     events.emit("stats:recompute");
   }, 5 * 60 * 1000);
 }
+
+// TODO: delete?

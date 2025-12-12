@@ -6,11 +6,11 @@ with a React frontend and a stats endpoint recomputed every 5 minutes.
 ## Running with Docker
 
 ```bash
-docker build -t swstarter .
-docker run -p 3000:3000 swstarter
+docker compose up
+# then open http://localhost:5173
 
 ## Out of scope:
-- Mobile stying
+- Mobile-first stying
 - Test coverage
 - Database persistence
-
+- SCSS modules and specific component styling
