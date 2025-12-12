@@ -4,11 +4,9 @@ const axios = require('axios');
 const SWAPI_BASE = 'https://swapi.tech/api';
 
 function unwrapResource(data) {
-  // New swapi.tech format: { message, result: { properties: {...} } }
   if (data && data.result && data.result.properties) {
     return data.result.properties;
   }
-  // Older format (docs on GitHub): resource is the object itself
   return data;
 }
 
@@ -21,14 +19,14 @@ function extractIdFromUrl(url) {
 
 /**
  * Search people by name fragment.
- * Uses global "search" parameter described in docs.  [oai_citation:0‡GitHub](https://github.com/semperry/swapi)
+ * Uses global "search" parameter described in docs.
  */
 async function searchPeople(query) {
   const { data } = await axios.get(`${SWAPI_BASE}/people`, {
     params: { search: query.trim() }
   });
 
-  const results = data.results || []; // [{ uid, name, url }, ...]  [oai_citation:1‡FeRHeDio - iOS Developer](https://www.ferhedio.com/building-a-star-wars-app-with-swiftui-combine-part-3/?utm_source=chatgpt.com)
+  const results = data.results || [];
   return results.map(r => ({
     id: r.uid || extractIdFromUrl(r.url),
     name: r.name
@@ -37,14 +35,14 @@ async function searchPeople(query) {
 
 /**
  * Search films by title fragment.
- * Films also support the search parameter; title is the search field.  [oai_citation:2‡GitHub](https://github.com/semperry/swapi)
+ * Films also support the search parameter; title is the search field. 
  */
 async function searchFilms(query) {
   const { data } = await axios.get(`${SWAPI_BASE}/films`, {
     params: { search: query.trim() }
   });
 
-  const results = data.results || []; // same shape as people list
+  const results = data.results || [];
   return results.map(r => ({
     id: r.uid || extractIdFromUrl(r.url),
     title: r.title || r.name // defensive

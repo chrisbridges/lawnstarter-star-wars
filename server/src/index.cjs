@@ -1,4 +1,3 @@
-// server/index.cjs
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -86,9 +85,6 @@ app.get('/api/stats', (req, res) => {
   res.json(getStats());
 });
 
-// --- Static frontend (React build) ---
-// If you're building the React app into /client/build, serve it:
-// In the container this resolves to /app/server/public
 const publicPath = path.join(__dirname, 'public');
 
 app.use(express.static(publicPath));

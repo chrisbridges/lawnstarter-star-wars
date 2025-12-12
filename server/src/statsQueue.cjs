@@ -41,5 +41,3 @@ export function startStatsScheduler() {
     events.emit("stats:recompute");
   }, 5 * 60 * 1000);
 }
-
-// TODO: delete?
