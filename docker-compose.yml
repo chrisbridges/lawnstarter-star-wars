@@ -22,4 +22,3 @@ services:
     ports:
       - "5173:80"
 
-# Networks and volumes use defaults; service names are resolvable within compose
