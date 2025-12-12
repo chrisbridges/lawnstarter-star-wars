@@ -7,10 +7,14 @@ with a React frontend and a stats endpoint recomputed every 5 minutes.
 
 ```bash
 docker compose up
-# then open http://localhost:5173
+```
 
-## Out of scope:
-- Mobile-first stying
+Then open <http://localhost:5173>
+
+## Out of scope
+
+- Mobile-first styling
 - Test coverage
 - Database persistence
 - SCSS modules and specific component styling
+- breaking up routes + accompanied logic into separate files
