@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: lawnstarter-server
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - SERVE_FRONTEND=false
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: lawnstarter-client
+    depends_on:
+      - server
+    ports:
+      - "5173:80"
+
+# Networks and volumes use defaults; service names are resolvable within compose

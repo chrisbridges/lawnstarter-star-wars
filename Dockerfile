@@ -1,27 +1,38 @@
-# ---- FRONTEND BUILD ----
-FROM node:20-alpine AS client-build
-WORKDIR /app/client
-COPY client/package*.json ./
-RUN npm install
-COPY client/ ./
-RUN npm run build
+# ─────────────────────────────────────────────
+# Stage 1: build frontend + install backend deps
+# ─────────────────────────────────────────────
+FROM node:20-alpine AS build
 
-# ---- SERVER ----
-FROM node:20-alpine
 WORKDIR /app
 
-# Install server deps
-COPY server/package*.json ./server/
+# Copy the whole repo (simplest)
+COPY . .
+
+# Build the React app
+WORKDIR /app/client
+RUN npm install && npm run build
+
+# Install server dependencies
 WORKDIR /app/server
 RUN npm install --omit=dev
 
-# Copy server source
-COPY server/src ./src
 
-# Copy built client into /client-build for Express static serving
-COPY --from=client-build /app/client/dist ./client-build
+# ─────────────────────────────────────────────
+# Stage 2: runtime image
+# ─────────────────────────────────────────────
+FROM node:20-alpine
+
+# All runtime code lives under /app/server
+WORKDIR /app/server
+
+# Copy server code + node_modules from build stage
+COPY --from=build /app/server ./
+
+# Copy built frontend into /app/server/public
+# (we'll serve this via Express)
+COPY --from=build /app/client/build ./public
 
 ENV NODE_ENV=production
-EXPOSE 3000
+EXPOSE 4000
 
-CMD ["node", "src/index.js"]
+CMD ["node", "src/index.cjs"]
